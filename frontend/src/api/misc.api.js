@@ -1,0 +1,10 @@
+import api from "./axios";
+export const listDepartments = () => api.get("/departments").then(r => r.data);
+export const listCourses = (params) => api.get("/courses", { params }).then(r => r.data);
+export const listSubjects = (params) => api.get("/subjects", { params }).then(r => r.data);
+export const listClassrooms = () => api.get("/classrooms").then(r => r.data);
+export const listNotifications = () => api.get("/notifications").then(r => r.data);
+export const sendNotification = (payload) => api.post("/notifications/send", payload).then(r => r.data);
+export const getSentNotifications = () => api.get("/notifications/sent").then(r => r.data);
+export const markRead = (id) => api.put(`/notifications/${id}/read`).then(r => r.data);
+export const markAllRead = () => api.put("/notifications/read-all").then(r => r.data);
