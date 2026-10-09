@@ -21,6 +21,7 @@ import chatbotRoutes from "./src/routes/chatbot.routes.js";
 import feeRoutes from "./src/routes/fee.routes.js";
 dotenv.config({ path: fileURLToPath(new URL("./src/.env", import.meta.url)) });
 
+import profileRoutes from "./src/routes/profile.routes.js";
 const app = express();
 
 app.use(
@@ -58,6 +59,7 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/chatbot", chatbotRoutes);
 app.use("/api/notes", noteRoutes);
+app.use("/api/profile", profileRoutes);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 8000;

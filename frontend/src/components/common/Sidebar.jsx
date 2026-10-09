@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../context/useAuth";
 // eslint-disable-next-line no-unused-vars
-import { LayoutDashboard, Users, GraduationCap, BookOpen, CalendarDays, ClipboardCheck, History, Bell, FileBarChart, LogOut, Building2, School, Send ,IndianRupee, Wallet, Receipt } from "lucide-react";
+import { LayoutDashboard, Users, GraduationCap, BookOpen, CalendarDays, ClipboardCheck, History, Bell, FileBarChart, LogOut, Building2, School, Send ,IndianRupee, Wallet, Receipt, UserCircle } from "lucide-react";
 const adminLinks = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, end: true },
   { to: "/admin/students", label: "Students", icon: Users },
@@ -16,6 +16,7 @@ const adminLinks = [
   { to: "/admin/fees/structure", label: "Fee Structure", icon: IndianRupee },
   { to: "/admin/fees/payments", label: "Fee Payments", icon: Wallet },
   { to: "/admin/notes", label: "Notes", icon: FileBarChart },
+  { to: "/admin/profile", label: "My Profile", icon: UserCircle },
 ];
 
 const teacherLinks = [
@@ -26,6 +27,7 @@ const teacherLinks = [
   { to: "/teacher/notify", label: "Send Notification", icon: Send },        // ← NEW
   { to: "/teacher/notes", label: "Notes", icon: FileBarChart },
   { to: "/teacher/history", label: "History", icon: History },
+  { to: "/teacher/profile", label: "My Profile", icon: UserCircle },
 ];
 const studentLinks = [
   { to: "/student", label: "Dashboard", icon: LayoutDashboard, end: true },
@@ -34,6 +36,7 @@ const studentLinks = [
   { to: "/student/notifications", label: "Notifications", icon: Bell },
   { to: "/student/fees", label: "My Fees", icon: IndianRupee },
   { to: "/student/notes", label: "Notes", icon: FileBarChart },
+  { to: "/student/profile", label: "My Profile", icon: UserCircle },
 ];
 
 export default function Sidebar() {

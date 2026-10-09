@@ -5,20 +5,19 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Ensure upload folder exists
-const uploadDir = path.join(__dirname, "..", "..", "uploads", "notes");
-fs.mkdirSync(uploadDir, { recursive: true });
+// -------- Notes upload --------
+const notesDir = path.join(__dirname, "..", "..", "uploads", "notes");
+fs.mkdirSync(notesDir, { recursive: true });
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, uploadDir),
+const notesStorage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, notesDir),
   filename: (req, file, cb) => {
     const unique = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    const ext = path.extname(file.originalname);
-    cb(null, `${unique}${ext}`);
+    cb(null, `${unique}${path.extname(file.originalname)}`);
   },
 });
 
-const ALLOWED = [
+const NOTES_MIMES = [
   "application/pdf",
   "application/msword",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -30,10 +29,33 @@ const ALLOWED = [
 ];
 
 export const uploadNote = multer({
-  storage,
-  limits: { fileSize: 20 * 1024 * 1024 }, // 20 MB
+  storage: notesStorage,
+  limits: { fileSize: 20 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
-    if (ALLOWED.includes(file.mimetype)) return cb(null, true);
-    cb(new Error("Unsupported file type. Allowed: PDF, DOC, DOCX, PPT, PPTX, PNG, JPG, TXT"));
+    if (NOTES_MIMES.includes(file.mimetype)) return cb(null, true);
+    cb(new Error("Unsupported file type"));
+  },
+});
+
+// -------- Profile image upload --------
+const profileDir = path.join(__dirname, "..", "..", "uploads", "profiles");
+fs.mkdirSync(profileDir, { recursive: true });
+
+const profileStorage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, profileDir),
+  filename: (req, file, cb) => {
+    const unique = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, `${unique}${path.extname(file.originalname)}`);
+  },
+});
+
+export const uploadProfileImage = multer({
+  storage: profileStorage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB
+  fileFilter: (req, file, cb) => {
+    if (["image/png", "image/jpeg", "image/jpg", "image/webp"].includes(file.mimetype)) {
+      return cb(null, true);
+    }
+    cb(new Error("Only PNG, JPG, JPEG, WEBP allowed"));
   },
 });

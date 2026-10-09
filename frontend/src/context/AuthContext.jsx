@@ -57,8 +57,18 @@ export function AuthProvider({ children }) {
     setUser(null);
   };
 
+  const contextValue = {
+    user,
+    loading,
+    login,
+    register,
+    googleLogin,
+    logout,
+    setUser,
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, googleLogin, logout }}>
+    <AuthContext.Provider value={contextValue}>
       {children}
     </AuthContext.Provider>
   );

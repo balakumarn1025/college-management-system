@@ -44,6 +44,9 @@ import AdminNotes from "./pages/admin/Notes";
 import TeacherNotes from "./pages/teacher/Notes";
 import StudentNotes from "./pages/student/Notes";
 
+//profile
+import Profile from "./pages/Share/Profile";
+
 function HomeRedirect() {
   const { user, loading } = useAuth();
 
@@ -51,14 +54,23 @@ function HomeRedirect() {
   return <Navigate to={user ? `/${user.role}` : "/login"} replace />;
 }
 
+function ProfileRedirect() {
+  const { user, loading } = useAuth();
+
+  if (loading) return <div className="p-8">Loading...</div>;
+  return <Navigate to={user ? `/${user.role}/profile` : "/login"} replace />;
+}
+
 export default function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<HomeRedirect />} />
+      <Route path="/profile" element={<ProfileRedirect />} />
 
       <Route element={<ProtectedRoute roles={["admin"]} />}>
         <Route path="/admin" element={<DashboardLayout />}>
+        <Route path="profile" element={<Profile />} />
           <Route index element={<AdminDashboard />} />
           <Route path="students" element={<Students />} />
           <Route path="teachers" element={<Teachers />} />
@@ -78,6 +90,7 @@ export default function App() {
 
       <Route element={<ProtectedRoute roles={["teacher"]} />}>
         <Route path="/teacher" element={<DashboardLayout />}>
+          <Route path="profile" element={<Profile />} />
           <Route index element={<TeacherDashboard />} />
           <Route path="mark" element={<MarkAttendance />} />
           <Route path="timetable" element={<MyTimetable />} />
@@ -90,6 +103,7 @@ export default function App() {
 
       <Route element={<ProtectedRoute roles={["student"]} />}>
         <Route path="/student" element={<DashboardLayout />}>
+          <Route path="profile" element={<Profile />} />
           <Route index element={<StudentDashboard />} />
           <Route path="attendance" element={<MyAttendance />} />
           <Route path="timetable" element={<StudentTimetable />} />
